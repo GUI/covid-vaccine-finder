@@ -62,8 +62,18 @@ export default {
         return [];
       }
 
+      const lastFetched = DateTime.fromISO(
+        this.store.properties.appointments_last_fetched,
+        {
+          setZone: true,
+        }
+      );
       return this.normalizeAppointments(
-        this.store.properties.appointments.slice(0, 5)
+        this.store.properties.appointments
+          .filter((item) => {
+            return this.asDate(item.time) >= lastFetched;
+          })
+          .slice(0, 5)
       );
     },
 
@@ -72,23 +82,33 @@ export default {
         return [];
       }
 
+      const lastFetched = DateTime.fromISO(
+        this.store.properties.appointments_last_fetched,
+        {
+          setZone: true,
+        }
+      );
       return this.normalizeAppointments(
-        this.store.properties.appointments.slice(5)
+        this.store.properties.appointments
+          .filter((item) => {
+            return this.asDate(item.time) >= lastFetched;
+          })
+          .slice(5)
       );
     },
   },
 
   methods: {
     formatTime(time) {
-      return DateTime.fromISO(time, { setZone: true }).toLocaleString(
-        DateTime.DATETIME_SHORT
-      );
+      return this.asDate(time).toLocaleString(DateTime.DATETIME_SHORT);
     },
 
     formatDate(date) {
-      return DateTime.fromISO(date, { setZone: true }).toLocaleString(
-        DateTime.DATE_SHORT
-      );
+      return this.asDate(date).toLocaleString(DateTime.DATE_SHORT);
+    },
+
+    asDate(date) {
+      return DateTime.fromISO(date, { setZone: true });
     },
 
     normalizeAppointments(appointments) {
