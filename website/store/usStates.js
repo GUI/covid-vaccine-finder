@@ -102,7 +102,9 @@ export const getters = {
 
       if (
         queryProvider &&
-        location.properties.provider_brand_id !== parseInt(queryProvider, 10)
+        !queryProvider.includes(
+          location.properties.provider_brand_id.toString()
+        )
       ) {
         include = false;
       }
