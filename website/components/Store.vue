@@ -4,7 +4,10 @@
     <div class="card-header">
       <div class="row">
         <h5 class="col-sm mb-0">
-          {{ title }}
+          {{ title }} -
+          <a :href="`${fullAddressLink}`" target="_blank">
+            {{ fullAddress }}
+          </a>
         </h5>
         <div v-if="store.distance" class="col-sm-auto">
           {{ $t("{distance} miles", { distance: store.distance }) }}
@@ -37,7 +40,6 @@ export default {
       ) {
         title += ` - ${this.store.properties.name}`;
       }
-      title += ` - ${this.fullAddress}`;
 
       return title;
     },
@@ -52,6 +54,12 @@ export default {
       ]
         .filter((value) => !!value)
         .join(", ");
+    },
+
+    fullAddressLink() {
+      let link = "https://www.google.com/maps/place/";
+      link += `${this.fullAddress}`.replace(/ /g, "+");
+      return link;
     },
   },
 };
