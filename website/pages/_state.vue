@@ -17,7 +17,7 @@
       <div class="container-fluid container-lg-no-padding">
         <div class="row g-3 g-lg-0">
           <div class="col-lg-6 col-map">
-            <location-map />
+            <location-map ref="locationMap" />
           </div>
           <div class="col-lg-6 col-list">
             <div class="results-container">
@@ -58,6 +58,9 @@
                 v-for="store in filteredLocationsPage"
                 :key="store.properties.id"
                 :store="store"
+                @highlight-location="
+                  $refs.locationMap.highlightLocation($event)
+                "
               ></store>
 
               <location-pagination

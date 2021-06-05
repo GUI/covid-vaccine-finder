@@ -178,8 +178,12 @@ export default {
       });
 
       this.map.on("click", "locations", (e) => {
-        const coordinates = e.features[0].geometry.coordinates.slice();
-        const store = e.features[0];
+        const store = e.highlightLocationId
+          ? e.features.find(
+              (feature) => feature.properties.id === e.highlightLocationId
+            )
+          : e.features[0];
+        const coordinates = store.geometry.coordinates.slice();
 
         // Nested JSON data in the properties is represented as JSON strings
         // (rather than actual objects) when fetching the object from the click
@@ -254,6 +258,28 @@ export default {
         this.mapBoundsUpdated = true;
         this.mapBoundsAnimate = true;
       }
+    },
+
+    highlightLocation(store) {
+      const [lng, lat] = store.geometry.coordinates;
+      this.map.panTo(
+        {
+          lon: lng,
+          lat,
+        },
+        {
+          duration: 250,
+        }
+      );
+      setTimeout(() => {
+        this.map.fire("click", {
+          lngLat: {
+            lng,
+            lat,
+          },
+          highlightLocationId: store.properties.id,
+        });
+      }, 500);
     },
   },
 };

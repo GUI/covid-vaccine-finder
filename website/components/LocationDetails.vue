@@ -26,8 +26,18 @@
             name: store.properties.provider_brand_name,
           })
         }}
-        <font-awesome-icon icon="arrow-alt-circle-right"
-      /></a>
+        <font-awesome-icon icon="arrow-alt-circle-right" />
+      </a>
+
+      <a
+        :href="directionsLink"
+        class="btn btn-primary"
+        target="_blank"
+        :rel="noopener"
+      >
+        {{ $t("Get Directions") }}
+        <font-awesome-icon icon="directions" />
+      </a>
     </div>
     <div v-else class="location-status">
       <div v-if="store.properties.appointments_available === false">
@@ -76,6 +86,12 @@
           <font-awesome-icon icon="external-link-alt"
         /></a>
       </p>
+      <p>
+        <a :href="directionsLink" target="_blank" :rel="noopener">
+          {{ $t("Get Directions") }}
+          <font-awesome-icon icon="external-link-alt" />
+        </a>
+      </p>
     </div>
 
     <p class="card-text text-secondary mt-2">
@@ -121,6 +137,20 @@ export default {
       }
 
       return rel;
+    },
+
+    directionsLink() {
+      return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+        [
+          this.store.properties.address,
+          this.store.properties.city,
+          [this.store.properties.state, this.store.properties.postal_code]
+            .filter((value) => !!value)
+            .join(", "),
+        ]
+          .filter((value) => !!value)
+          .join(", ")
+      )}`;
     },
   },
 };

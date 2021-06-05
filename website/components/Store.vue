@@ -4,7 +4,13 @@
     <div class="card-header">
       <div class="row">
         <h5 class="col-sm mb-0">
-          {{ title }}
+          {{ title }} -
+          <a
+            href="javascript:void(0);"
+            @click="$emit('highlight-location', store)"
+          >
+            {{ fullAddress }}
+          </a>
         </h5>
         <div v-if="store.distance" class="col-sm-auto">
           {{ $t("{distance} miles", { distance: store.distance }) }}
@@ -37,7 +43,6 @@ export default {
       ) {
         title += ` - ${this.store.properties.name}`;
       }
-      title += ` - ${this.fullAddress}`;
 
       return title;
     },
