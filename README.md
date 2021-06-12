@@ -2,22 +2,36 @@
 
 A tool to help you track down COVID-19 vaccine appointment openings at your state's pharmacies. The code behind https://www.vaccinespotter.org.
 
-## UI Development Setup
 
+## Installation
 Requirements:
 
-- Node.js 14+
-- Yarn
-
-This process is clunky right now, so my apologies.
+- [Node.js 14+](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/)
 
 1. Clone the repo: `git clone https://github.com/GUI/covid-vaccine-spotter.git`
 2. Install dependencies (inside the repo): `yarn install`
-3. Fetch data from the [API](https://www.vaccinespotter.org/api/) for the website to run: `yarn setup`
-4. To run the development server for the website: `yarn dev`. The development site should then be available at http://localhost:3000/.
 
-## DB and Backend Development Setup
+## Frontend Development Setup
+```bash
+# install dependencies
+$ yarn install
 
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+The development site should then be available at http://localhost:3000/.
+
+The front-end code for the website is available at [covid-vaccine-spotter/website](https://github.com/GUI/covid-vaccine-spotter/tree/main/website)
+
+## Backend Development Setup
 docker-compose is used to bring up a local postgres DB. Then an image runs to bootstrap the database with states and postal codes. Finally, as an example of a backend task running, a container runs the `refresh-website` task.
 
 ```
@@ -31,25 +45,20 @@ To run additional tasks, you can use `docker-compose run`:
 docker-compose run --rm --no-deps task_runner bin/refresh-cvs
 ```
 
+## Contributing
+Pull requests are welcome! Currently aiming to expand pharmacy coverage and facilitate e-mail or text notifications for available appointments.
+
+## Support
+Email: vaccine@nickm.org
+
+Twitter: [@nickblah](https://twitter.com/nickblah)
+
 ## Very Beta API
 
 All of the data being collected is published as JSON files here: https://www.vaccinespotter.org/api/
 
 Subscribe to this discussion for any announcement of API changes: https://github.com/GUI/covid-vaccine-spotter/discussions/27
 
-## Website Language Translations
-
-### Contributing Translations
-
-If you would like to help translate the website content into other languages, thank you! You can perform translations and add additional languages at [Localazy](https://localazy.com/p/vaccinespotter).
-
-### Developer Translation Workflow
-
-1. If you're adding new text to the website, just wrap the English text with the `$t` helper, like `$t('my text here...')`.
-2. In order to translate these strings into other languages, and you have permissions to Localazy, then the steps are:
-   1. Run `./bin/run locale:extract` to extract any new strings into the `website/lang/messages.pot` file.
-   2. Run `./bin/run locale:upload` to upload the updated `website/lang/messages.pot` file to Localazy.
-   3. After translations are performed, run `./bin/run locale:download` to download the resulting language files.
 
 ## License
 
