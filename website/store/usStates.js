@@ -169,6 +169,15 @@ export const getters = {
 
     return locations;
   },
+
+  getSearchFilters(state, getters, rootState) {
+    return {
+      queryAppointmentType: rootState.route.query.appointment_type,
+      queryVaccineType: rootState.route.query.vaccine_type,
+      queryProvider: rootState.route.query.provider,
+      queryIncludeAll: rootState.route.query.include_all,
+    };
+  },
 };
 
 export const mutations = {

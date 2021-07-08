@@ -12,7 +12,7 @@ Requirements:
 This process is clunky right now, so my apologies.
 
 1. Clone the repo: `git clone https://github.com/GUI/covid-vaccine-spotter.git`
-2. Install dependencies (inside the repo): `yarn install`
+2. Install dependencies (inside the repo): `yarn install` (if you encounter issues with node-libcurl, run `yarn add node-libcurl@next`)
 3. Fetch data from the [API](https://www.vaccinespotter.org/api/) for the website to run: `yarn setup`
 4. To run the development server for the website: `yarn dev`. The development site should then be available at http://localhost:3000/.
 
